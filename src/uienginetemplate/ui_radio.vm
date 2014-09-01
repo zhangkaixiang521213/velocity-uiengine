@@ -1,0 +1,8 @@
+## radioÔªËØ´¦Àí
+#macro ( analysisRadio $childList)
+	#set($childList_radio=$childList.getChildren("childList")[0])
+	#foreach ( $child_radio in $childList_radio.getChildren("child") )
+		#analysisDescription($child_radio)
+		<input id="$!{child_radio.getAttributeValue('htmlId')}" name="$!{child_radio.getAttributeValue('name')}" type="radio" value="$!{child_radio.getAttributeValue('value')}" #analysisChecked($child_radio) #analysisDisabled($child_radio)  class="$!{child_radio.getAttributeValue('classId')}" #analysisSingleEvents($child_radio)>$!{child_radio.getAttributeValue('label')}
+	#end
+#end

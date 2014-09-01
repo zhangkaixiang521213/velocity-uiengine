@@ -1,0 +1,166 @@
+##常量
+#set($CHILD="child") 
+#set($CHILD_TYPE="type")
+#set($CHILD_TYPE_DIV="DivContainerElement")
+#set($CHILD_TYPE_TABLE="LayoutTableElement")
+#set($CHILD_TYPE_TR="row")
+#set($CHILD_TYPE_COLUMN="column")
+#set($CHILD_TYPE_CELLITEM="CellItemElement")
+#set($CHILD_TYPE_LABEL="LabelElement")
+#set($CHILD_TYPE_TEXT="TextElement")
+#set($CHILD_TYPE_BUTTON="ButtonElement")
+#set($CHILD_TYPE_JAVASCRIPT="javascripts")
+#set($CHILD_TYPE_FILE="file")
+#set($CHILD_TYPE_SYSTEM="system")
+#set($CHILD_TYPE_LIST_TABLE="ListTableElement")
+
+##包括函数
+#parse("engine_table.vm")
+
+##初始调用文档解析
+#document()
+
+##解析body元素(递归)
+#macro ( recursiveBody $childList)
+	#if( $childList.getChildren().size() > 0 )
+		##$childList.getName()
+		##$childList.getName()
+		#set($nodeType=$childList.getAttributeValue($CHILD_TYPE,$root.getRootElement().getNamespace()))
+		#if($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_DIV)
+			#analysisDiv($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_TABLE)
+			#analysisTable($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_LABEL)
+			#analysisLabel($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_TEXT)
+			#analysisText($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_BUTTON)
+			#analysisA($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_LIST_TABLE)
+			#analysisListTable($childList)
+		#else
+			#foreach ( $child in $childList.getChildren() )
+		        #recursiveBody($child)
+		    #end
+	    #end
+	#end
+#end
+
+## a元素处理
+#macro ( analysisA $childList)
+	<a href="javascript:void(0)" id="$childList.getAttributeValue('htmlId')" class="easyui-linkbutton" style="$!{childList.getAttributeValue('style')}">$!{childList.getAttributeValue('value')}</a>
+#end
+
+## Label元素处理
+#macro ( analysisLabel $childList)
+	<label id="$childList.getAttributeValue('htmlId')">$childList.getAttributeValue('value')
+		#recursiveEmbed($childList)
+	</label>
+#end 
+
+
+## div元素处理
+#macro ( analysisDiv $childList)
+	<div class="easyui-panel" title="$!{childList.getAttributeValue('description')}" style="$!{childList.getAttributeValue('style')}">
+		#recursiveEmbed($childList)
+	</div>
+#end
+
+## text元素处理
+#macro ( analysisText $childList)
+	#set($events="")
+	#if($childList.getChildren("eventType").size()>0)
+		#set($eventType=$childList.getChildren("eventType")[0])
+		#if($eventType.getChildren().size()>0)
+			#foreach($eventNode in $eventType.getChildren())
+				#set($events=$events+$eventNode.getName()+"="+$eventNode.getText()+"  ")
+			#end
+		#end
+	#end
+	<input class="$!{childList.getAttributeValue('classId')}" id="$childList.getAttributeValue('htmlId')" type="text" name="$!{childList.getAttributeValue('name')}" $events></input>
+#end
+
+##调用嵌入递归
+#macro (recursiveEmbed $node)
+		#foreach ( $child in $node.getChildren() )
+	        #recursiveBody($child)
+	    #end
+#end
+
+##tbale元素处理
+#macro (tableTrTd $node)
+		#set($rows=$node.getChildren("rows")[0])
+		#if($rows.getChildren("row").size()>0)
+			#set($rowNum=0)
+			#foreach ( $row in $rows.getChildren("row") )
+				#set($rowNum=$rowNum+1)
+				##参数：子元素列表 行标
+				#analysisTr($node $rowNum)
+		    #end
+	    #end
+	    ##stop
+#end
+
+## tr元素处理
+##参数：子元素列表 行标
+#macro ( analysisTr $node $rowNum)
+	#set($columns=$node.getChildren("columns")[0])
+	<tr id="$row.getAttributeValue('htmlId')" height="$row.getAttributeValue('height')">
+		#if($columns.getChildren("column").size()>0)
+			## 参数：元素列表 行标 列结点列表
+			#analysisTd($node $rowNum $columns)
+		#end
+	</tr>
+#end
+
+## td元素处理
+## 参数：元素列表 行标 列结点列表
+#macro ( analysisTd $node $rowNum $columns)
+	#set($columnNum=0)
+	#foreach ( $column in $columns.getChildren("column") )
+		#set($columnNum=$columnNum+1)
+		#set($childLists=$node.getChildren("childList")[0])
+		#foreach($curCell in $childLists.getChildren("child"))
+			#set($curRowNum=$curCell.getAttributeValue("row"))
+			#set($curColumnNum=$curCell.getAttributeValue("column"))
+			#set($nodeType=$curCell.getAttributeValue($CHILD_TYPE,$root.getRootElement().getNamespace()))
+			#if($curRowNum==$rowNum && $curColumnNum==$columnNum && 
+				$curCell.getName()==$CHILD && $nodeType==$CHILD_TYPE_CELLITEM)
+				<td width="$column.getAttributeValue('width')"  align="$!{curCell.getAttributeValue("horizontalAlign")}" >
+					#recursiveEmbed($curCell)
+				</td>
+			#end
+		#end
+	#end
+	#set($columnNum=0)
+#end
+
+##解析js包含文件
+#macro ( analysisHeadJs $childList)
+	#if( $childList.getChildren("$CHILD_TYPE_SYSTEM").size() > 0 )
+		#set($systemNode=$childList.getChildren("system")[0])
+		#set($jsNodes=$systemNode.getChildren("$CHILD_TYPE_FILE"))
+		#foreach ( $jsNode in $jsNodes )
+			<script type="text/javascript" src="$jsNode.getAttributeValue('fileName')"></script>
+	    #end
+	#end
+#end
+
+##dom文档模型
+#macro (document)
+	<%@ page contentType="text/html;charset=UTF-8" %>
+	<%@ include file="/WEB-INF/public/include/default.jsp" %>
+    <html>
+        <head>
+             #analysisHeadJs($root.getRootElement().getChildren("$CHILD_TYPE_JAVASCRIPT")[0])
+             
+             #set ($name = $root.getRootElement().getAttributeValue("name"))
+            <title>$name</title>
+            ##stop
+        </head>
+
+        <body>    
+            #recursiveBody($root.getRootElement())
+        </body>
+    </html>
+#end

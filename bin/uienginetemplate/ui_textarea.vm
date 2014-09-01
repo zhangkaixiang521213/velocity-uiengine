@@ -1,0 +1,5 @@
+## textareaÔªËØ´¦Àí
+#macro ( analysisTextarea $childList)
+	#analysisDescription($childList)
+	<textarea id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" rows="$!{childList.getAttributeValue('rows')}" cols="$!{childList.getAttributeValue('cols')}" #analysisDisabled($childList) #analysisReadOnly($childList) style="#analysisStyle($childList)" #analysisSingleEvents($childList)>$!{childList.getAttributeValue('value')}</textarea>
+#end

@@ -1,0 +1,5 @@
+## fileÔªËØ´¦Àí
+#macro ( analysisFile $childList)
+	#analysisDescription($childList)
+	<input id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" type="file" classId="$!{childList.getAttributeValue('classId')}" style="#analysisStyle($childList)" #analysisSingleEvents($childList)/>
+#end

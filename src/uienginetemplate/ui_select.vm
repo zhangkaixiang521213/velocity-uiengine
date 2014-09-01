@@ -1,0 +1,24 @@
+## select元素处理
+#macro ( analysisSelect $childList)
+	#analysisDescription($childList)
+	<select id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" class="$!{childList.getAttributeValue('classId')}" data-options="#analysisDataOptions($childList)#analysisAttrEvents($childList)" #analysisSingleEvents($childList)>
+		#set($enumData=$childList.getChildren("enumData")[0])
+		#foreach ( $item in $enumData.getChildren("item") )
+			<option value="$!{item.getAttributeValue('value')}" checked="$!{item.getAttributeValue('checked')}">$!{item.getAttributeValue('key')}</option>
+		#end
+	</select>
+#end
+
+## data-options属性解析
+#macro (analysisDataOptions $childList)
+	#set( $dataOptionsStr="")
+	#set( $attributes = ["textField","valueField","url","method"])
+	#foreach( $attribute in $attributes )
+	    #set( $attributeValue = $childList.getAttributeValue($attribute) )
+	    #if( $attributeValue != "" )
+	   		 #set( $dataOptionsStr=$!{dataOptionsStr}+$!{attribute}+":'"+$attributeValue+"',")
+	    #end
+	    #set( $attributeValue ="")
+	#end
+	$!{dataOptionsStr}
+#end

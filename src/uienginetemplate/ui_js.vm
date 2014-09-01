@@ -1,0 +1,13 @@
+##解析js包含文件
+#macro ( analysisHeadJs $root)
+	#if($root.getRootElement().getChildren("$CHILD_TYPE_JAVASCRIPT").size()>0)
+		#set($childList=$!{root.getRootElement().getChildren("$CHILD_TYPE_JAVASCRIPT")[0]})
+		#if( $childList.getChildren("$CHILD_TYPE_SYSTEM").size() > 0 )
+			#set($systemNode=$childList.getChildren("system")[0])
+			#set($jsNodes=$systemNode.getChildren("$CHILD_TYPE_FILE"))
+			#foreach ( $jsNode in $jsNodes )
+				<script type="text/javascript" src="$jsNode.getAttributeValue('fileName')"></script>
+		    #end
+		#end
+	#end
+#end

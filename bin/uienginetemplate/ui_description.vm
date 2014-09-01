@@ -1,0 +1,8 @@
+## buttonÔªËØ´¦Àí
+#macro ( analysisDescription $childList)
+	#set($description=$!{childList.getAttributeValue('description')})
+	#if($description && $description!="")
+	<!-- $description -->
+	#end
+	#set($description="")
+#end

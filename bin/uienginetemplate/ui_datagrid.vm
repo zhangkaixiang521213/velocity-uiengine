@@ -1,0 +1,69 @@
+## datagrid元素处理
+#set( $tableDataOptionsStr = "")
+#set( $tableThDataOptionsStr = "")
+#macro ( analysisDatagrid $childList)
+	#tableDataOptions($childList)
+	#analysisDescription($childList)
+	<table id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" class="$!{childList.getAttributeValue('classId')}" data-options="$!{tableDataOptionsStr}#analysisAttrEvents($childList)">
+		<thead>
+			<tr>
+				#set($childListcd=$childList.getChild("childList"))
+				#set($child_one=$childListcd.getChildren("child"))
+				#foreach($childone in $child_one)
+					#parseTableTh($childone)
+				#end
+			</tr>
+		</thead>
+	</table>
+	#set( $tableDataOptionsStr = "")
+#end
+
+## datagrid 列表元素处理
+#macro (parseTableTh $childone)
+	#set($nodeTypes=$childone.getAttributeValue($CHILD_TYPE,$root.getRootElement().getNamespace()))
+	#if($nodeTypes == "DataTableContainerElement")
+		#set($child_two=$childone.getChild("childList"))
+		#set($childtwos=$child_two.getChildren("child"))
+		#foreach($childtwo in $childtwos)
+			#if($childtwo.getAttributeValue('row') == "1")
+				#tableThDataOptions($childtwo)
+				#analysisDescription($childtwo)
+				<th data-options="$!{tableThDataOptionsStr}">#tableHeadLabel($childtwo)</th>
+				#set( $tableThDataOptionsStr = "")
+				
+			#end
+		#end
+	#end
+#end
+
+## 表头名称解析
+#macro (tableHeadLabel $childList)
+	#set($headEle=$childList.getChild("childList").getChild("child"))
+	$!{headEle.getAttributeValue("value")}
+#end
+
+## 表头解析
+#macro (tableThDataOptions $childList)
+	#set( $attributes = ["checkbox", "field", "width", "formatter"])
+	#foreach( $attribute in $attributes )
+	    #set( $attributeValue = $childList.getAttributeValue($attribute) )
+	    #if( $attributeValue != "" )
+	   		 #set( $tableThDataOptionsStr=$!{tableThDataOptionsStr}+$!{attribute}+":'"+$attributeValue+"',")
+	    #end
+	    #set( $attributeValue ="")
+	#end
+#end
+
+## 表属性解析
+#macro (tableDataOptions $childList)
+	#set( $attributes = ["checkOnSelect", "selectOnCheck", "singleSelect", "rownumbers", "pagination", "fitColumns", "url", "method"])
+	#foreach( $attribute in $attributes )
+	    #set( $attributeValue = $childList.getAttributeValue($attribute) )
+	    #if( $attributeValue != "" && ($attribute == "url" || $attribute == "method"))
+	   		 #set( $tableDataOptionsStr=$!{tableDataOptionsStr}+$!{attribute}+":'"+$attributeValue+"',")
+	   	#elseif($attributeValue != "")
+	   		#set( $tableDataOptionsStr=$!{tableDataOptionsStr}+$!{attribute}+":"+$attributeValue+",")
+	    #end
+	    #set( $attributeValue ="")
+	#end
+#end

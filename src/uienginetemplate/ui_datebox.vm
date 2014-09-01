@@ -1,0 +1,19 @@
+## datebox元素处理
+#macro ( analysisDatebox $childList)
+	#analysisDescription($childList)
+	<input id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" type="text" value="$!{childList.getAttributeValue('value')}" #analysisDisabled($childList) #analysisReadOnly($childList) class="$!{childList.getAttributeValue('classId')}" data-options="#analysisOptions($childList)#analysisAttrEvents($childList)" />
+#end
+
+## data-options属性解析
+#macro (analysisOptions $childList)
+	#set( $dataOptionsStr="")
+	#set( $attributes = ["formatter"])
+	#foreach( $attribute in $attributes )
+	    #set( $attributeValue = $childList.getAttributeValue($attribute) )
+	    #if( $attributeValue != "" )
+	   		 #set( $dataOptionsStr=$!{dataOptionsStr}+$!{attribute}+":'"+$attributeValue+"',")
+	    #end
+	    #set( $attributeValue ="")
+	#end
+	$!{dataOptionsStr}
+#end

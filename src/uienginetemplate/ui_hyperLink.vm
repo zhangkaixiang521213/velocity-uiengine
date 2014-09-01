@@ -1,0 +1,5 @@
+## hyperLinkÔªËØ´¦Àí
+#macro ( analysisHyperLink $childList)
+	#analysisDescription($childList)
+	<a href="$!{childList.getAttributeValue('href')}" id="$!{childList.getAttributeValue('htmlId')}"  name="$!{childList.getAttributeValue('name')}" class="$!{childList.getAttributeValue('classId')}" #analysisSingleEvents($childList)>$!{childList.getAttributeValue('value')}</a>
+#end

@@ -1,0 +1,7 @@
+## LabelÔªËØ´¦Àí
+#macro ( analysisLabel $childList)
+	#analysisDescription($childList)
+	<label id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" style="#analysisStyle($childList)">$childList.getAttributeValue('value')
+		#recursiveEmbed($childList)
+	</label>
+#end 

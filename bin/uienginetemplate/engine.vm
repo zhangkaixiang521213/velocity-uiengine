@@ -1,0 +1,132 @@
+##常量
+#set($CHILD="child") 
+#set($CHILD_TYPE="type")
+#set($CHILD_TYPE_DIV="DivContainerElement")
+#set($CHILD_TYPE_PANEL="PanelContainerElement")
+#set($CHILD_TYPE_TABLE="LayoutTableElement")
+#set($CHILD_TYPE_TR="row")
+#set($CHILD_TYPE_COLUMN="column")
+#set($CHILD_TYPE_CELLITEM="CellItemElement")
+#set($CHILD_TYPE_LABEL="LabelElement")
+#set($CHILD_TYPE_TEXT="TextElement")
+#set($CHILD_TYPE_BUTTON="ButtonElement")
+#set($CHILD_TYPE_JAVASCRIPT="javascripts")
+#set($CHILD_TYPE_FILE="FileElement")
+#set($CHILD_TYPE_SYSTEM="system")
+#set($CHILD_TYPE_LIST_TABLE="ListTableElement")
+#set($CHILD_TYPE_CHECKBOX="CheckBoxElement")
+#set($CHILD_TYPE_DATEBOX="DateBoxElement")
+#set($CHILD_TYPE_HIDDEN="hidden")
+#set($CHILD_TYPE_RADIO="RadioGroupElement")
+#set($CHILD_TYPE_SELECT="SelectElement")
+#set($CHILD_TYPE_TEXTAREA="TextAreaElement")
+#set($CHILD_TYPE_FORM="FormElement")
+#set($CHILD_TYPE_FILE="FileElement")
+#set($CHILD_TYPE_DATAGRID="DataTableElement")
+#set($CHILD_TYPE_LAYOUT="layout")
+#set($CHILD_TYPE_PASSWORD="PasswordElement")
+#set($CHILD_TYPE_HYPERLINK="HyperlinkElement")
+
+##包括函数
+#set($path="uienginetemplate/")
+#parse("${path}ui_table.vm")
+#parse("${path}ui_button.vm")
+#parse("${path}ui_panel.vm")
+#parse("${path}ui_js.vm")
+#parse("${path}ui_label.vm")
+#parse("${path}ui_text.vm")
+#parse("${path}ui_checkbox.vm")
+#parse("${path}ui_datebox.vm")
+#parse("${path}ui_hidden.vm")
+#parse("${path}ui_select.vm")
+#parse("${path}ui_textarea.vm")
+#parse("${path}ui_form.vm")
+#parse("${path}ui_file.vm")
+#parse("${path}ui_datagrid.vm")
+#parse("${path}ui_layout.vm")
+#parse("${path}ui_password.vm")
+#parse("${path}ui_radio.vm")
+#parse("${path}ui_hyperLink.vm")
+#parse("${path}ui_event.vm")
+#parse("${path}ui_style.vm")
+#parse("${path}ui_description.vm")
+#parse("${path}ui_disabled.vm")
+
+##初始调用文档解析
+#document()
+
+##解析body元素(递归)
+#macro ( recursiveBody $childList)
+	#if( $childList.getChildren().size() > 0 )
+		##$childList.getName()
+		##$childList.getName()
+		#set($nodeType=$childList.getAttributeValue($CHILD_TYPE,$root.getRootElement().getNamespace()))
+		#if($childList.getName()==$CHILD && ($nodeType==$CHILD_TYPE_PANEL || $nodeType==$CHILD_TYPE_DIV))
+			#analysisPanel($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_TABLE)
+			#analysisTable($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_LABEL)
+			#analysisLabel($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_TEXT)
+			#analysisText($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_BUTTON)
+			#analysisButton($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_LIST_TABLE)
+			#analysisListTable($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_CHECKBOX)
+			#analysisCheckbox($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_DATEBOX)
+			#analysisDatebox($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_HIDDEN)
+			#analysisHidden($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_RADIO)
+			#analysisRadio($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_SELECT)
+			#analysisSelect($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_TEXTAREA)
+			#analysisTextarea($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_FORM)
+			#analysisForm($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_FILE)
+			#analysisFile($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_DATAGRID)
+			#analysisDatagrid($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_LAYOUT)
+			#analysisLayout($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_PASSWORD)
+			#analysisPassword($childList)
+		#elseif($childList.getName()==$CHILD && $nodeType==$CHILD_TYPE_HYPERLINK)
+			#analysisHyperLink($childList)
+		#else
+			#foreach ( $child in $childList.getChildren() )
+		        #recursiveBody($child)
+		    #end
+	    #end
+	#end
+#end
+
+##调用嵌入递归
+#macro (recursiveEmbed $node)
+		#foreach ( $child in $node.getChildren() )
+	        #recursiveBody($child)
+	    #end
+#end
+
+##dom文档模型
+#macro (document)
+	<%@ page contentType="text/html;charset=UTF-8" %>
+	<%@ include file="/WEB-INF/public/include/default.jsp" %>
+    <html>
+        <head>
+             #analysisHeadJs($root)
+             
+             #set ($name = $root.getRootElement().getAttributeValue("name"))
+            <title>$name</title>
+            ##stop
+        </head>
+
+        <body>    
+            #recursiveBody($root.getRootElement())
+        </body>
+    </html>
+#end

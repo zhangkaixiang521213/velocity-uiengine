@@ -1,0 +1,5 @@
+## buttonÔªËØ´¦Àí
+#macro ( analysisButton $childList)
+	#analysisDescription($childList)
+	<a href="javascript:void(0)" id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" class="$!{childList.getAttributeValue('classId')}" style="#analysisStyle($childList)"  data-options="#analysisAttrEvents($childList)">$!{childList.getAttributeValue('value')}</a>
+#end

@@ -1,0 +1,5 @@
+## checkboxÔªËØ´¦Àí
+#macro ( analysisCheckbox $childList)
+	#analysisDescription($childList)
+	<input id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" type="checkbox" value="$!{childList.getAttributeValue('value')}" class="$!{childList.getAttributeValue('classId')}"  #analysisChecked($childList) #analysisDisabled($childList) #analysisSingleEvents($childList)/>$!{childList.getAttributeValue('label')}
+#end

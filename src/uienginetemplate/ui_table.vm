@@ -1,0 +1,75 @@
+## table元素处理
+#macro ( analysisTable $childList)
+	<table id="$childList.getAttributeValue('htmlId')" style="$!{childList.getAttributeValue('style')}">
+		#tableTrTd($childList)
+	</table>
+#end
+
+## easyui 列表元素
+#macro ( analysisListTable $childList)
+	<table id="$childList.getAttributeValue('htmlId')" style="$childList.getAttributeValue('style')" class="$childList.getAttributeValue('class')"
+			title="$childList.getAttributeValue('title')" data-options="$childList.getAttributeValue('data-options')">
+		#set($rows=$childList.getChildren("rows")[0])
+		#set($columns=$childList.getChildren("columns")[0])
+		#if($rows.getChildren("row").size()>0)
+			#set($rowNum=0)
+			#foreach ( $row in $rows.getChildren("row") )
+				<thead>
+            		<tr id="$row.getAttributeValue('htmlId')">
+            			#foreach ( $column in $columns.getChildren("column") )
+            				<th data-options="$column.getAttributeValue('data-options')">$column.getAttributeValue('title')</th>
+            			#end
+		            </tr>
+		        </thead>
+		    #end
+	    #end
+	</table>
+#end
+
+##tbale元素处理
+#macro (tableTrTd $node)
+		#set($rows=$node.getChildren("rows")[0])
+		#if($rows.getChildren("row").size()>0)
+			#set($rowNum=0)
+			#foreach ( $row in $rows.getChildren("row") )
+				#set($rowNum=$rowNum+1)
+				##参数：子元素列表 行标
+				#analysisTr($node $rowNum)
+		    #end
+	    #end
+	    ##stop
+#end
+
+## tr元素处理
+##参数：子元素列表 行标
+#macro ( analysisTr $node $rowNum)
+	#set($columns=$node.getChildren("columns")[0])
+	<tr id="$row.getAttributeValue('htmlId')" height="$row.getAttributeValue('height')">
+		#if($columns.getChildren("column").size()>0)
+			## 参数：元素列表 行标 列结点列表
+			#analysisTd($node $rowNum $columns)
+		#end
+	</tr>
+#end
+
+## td元素处理
+## 参数：元素列表 行标 列结点列表
+#macro ( analysisTd $node $rowNum $columns)
+	#set($columnNum=0)
+	#foreach ( $column in $columns.getChildren("column") )
+		#set($columnNum=$columnNum+1)
+		#set($childLists=$node.getChildren("childList")[0])
+		#foreach($curCell in $childLists.getChildren("child"))
+			#set($curRowNum=$curCell.getAttributeValue("row"))
+			#set($curColumnNum=$curCell.getAttributeValue("column"))
+			#set($nodeType=$curCell.getAttributeValue($CHILD_TYPE,$root.getRootElement().getNamespace()))
+			#if($curRowNum==$rowNum && $curColumnNum==$columnNum && 
+				$curCell.getName()==$CHILD && $nodeType==$CHILD_TYPE_CELLITEM)
+				<td width="$column.getAttributeValue('width')"  align="$!{curCell.getAttributeValue("horizontalAlign")}" >
+					#recursiveEmbed($curCell)
+				</td>
+			#end
+		#end
+	#end
+	#set($columnNum=0)
+#end

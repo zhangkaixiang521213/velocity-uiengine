@@ -1,0 +1,4 @@
+## textÔªËØ´¦Àí
+#macro ( analysisText $childList)
+	<input class="$!{childList.getAttributeValue('classId')}" id="$childList.getAttributeValue('htmlId')" type="text" name="$!{childList.getAttributeValue('name')}" #analysisSingleEvents($childList)></input>
+#end

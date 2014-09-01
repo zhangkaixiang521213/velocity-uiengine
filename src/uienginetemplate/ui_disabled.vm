@@ -1,0 +1,29 @@
+##选中元素处理
+#macro ( analysisChecked $childList)
+	#set($checkedEle="")
+	#set($checked=$!{childList.getAttributeValue('checked')})
+	#if($checked == "true")
+	 #set($checkedEle=' checked="checked" ')
+	#end
+	$!{checkedEle}
+#end
+
+## 不可用(变灰)元素处理
+#macro ( analysisDisabled $childList)
+	#set($disabledEle="")
+	#set($disabled=$!{childList.getAttributeValue('disabled')})
+	#if($disabled == "true")
+	 #set($disabledEle=' disabled="disabled" ')
+	#end
+	$!{disabledEle}
+#end
+
+## 只读元素处理
+#macro ( analysisReadOnly $childList)
+	#set($readOnlyEle="")
+	#set($readOnly=$!{childList.getAttributeValue('readOnly')})
+	#if($readOnly == "true")
+	 #set($readOnlyEle=' readOnly="readOnly" ')
+	#end
+	$!{readOnlyEle}
+#end

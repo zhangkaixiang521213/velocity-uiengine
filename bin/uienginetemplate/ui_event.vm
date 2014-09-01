@@ -1,0 +1,40 @@
+## 事件元素处理
+##单独事件
+#macro ( analysisSingleEvents $childList)
+	#set( $attributes = ["onblur", "onfocus", "onclick", "onchange", "onload"])
+	#set( $eventSingleStr = "")
+	
+	#if($childList.getChildren("eventType").size()>0)
+		#set($eventType=$childList.getChild("eventType"))
+		#if($eventType.getChildren().size()>0)
+			#foreach($eventNode in $eventType.getChildren())
+				#if($attributes.contains($eventNode.getName()))
+					#set($eventSingleStr=$eventSingleStr+$eventNode.getName()+'="'+$eventNode.getText()+'" ')
+				#end
+			#end
+		#end
+		$!{eventSingleStr}
+		#set( $eventSingleStr = "")
+	#end
+#end
+
+##事件属性(如easyui中属性data-options)
+#macro ( analysisAttrEvents $childList)
+	#set( $attributesAttr = ["onSelect", "onCheck", "click"])
+	#set( $eventAttrStr = "")
+	
+	#if($childList.getChildren("eventType").size()>0)
+		#set($eventType=$childList.getChild("eventType"))
+		#if($eventType.getChildren().size()>0)
+			#foreach($eventNode in $eventType.getChildren())
+				#if($attributesAttr.contains($eventNode.getName()) && $eventNode.getName() == "click")
+					#set( $eventAttrStr=$!{eventAttrStr}+"onClick:'"+$eventNode.getText()+"',")
+				#elseif($attributesAttr.contains($eventNode.getName()))
+	   				#set( $eventAttrStr=$!{eventAttrStr}+$eventNode.getName()+":'"+$eventNode.getText()+"',")
+				#end
+			#end
+		#end
+		$!{eventAttrStr}
+		#set( $eventAttrStr = "")
+	#end
+#end

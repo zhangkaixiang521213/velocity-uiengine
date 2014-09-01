@@ -1,0 +1,9 @@
+## style¥¶¿Ì
+#macro (analysisStyle $childList)
+	#set($styleNode=$childList.getChild("size"))
+	#if($styleNode)
+		#set($style='width:'+$!{styleNode.getAttributeValue('x')}+'px;height:'+$!{styleNode.getAttributeValue('y')}+'px')
+		$!{style}
+		#set( $eventAttrStr = "")
+	#end
+#end

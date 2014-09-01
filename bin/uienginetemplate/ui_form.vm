@@ -1,0 +1,7 @@
+## formÔªËØ´¦Àí
+#macro ( analysisForm $childList)
+	#analysisDescription($childList)
+	<form id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" action="$!{childList.getAttributeValue('action')}" method="$!{childList.getAttributeValue('method')}">
+		#recursiveEmbed($childList)
+	</form>
+#end

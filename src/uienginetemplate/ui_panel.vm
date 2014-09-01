@@ -1,0 +1,6 @@
+## panelÔªËØ´¦Àí
+#macro ( analysisPanel $childList)
+	<div id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" data-options="$!{childList.getAttributeValue('data-options')}" class="$!{childList.getAttributeValue('classId')}" title="$!{childList.getAttributeValue('description')}" align="$!{childList.getAttributeValue('align')}" style="$!{childList.getAttributeValue('style')}">
+		#recursiveEmbed($childList)
+	</div>
+#end

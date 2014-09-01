@@ -1,0 +1,4 @@
+## hiddenÔªËØ´¦Àí
+#macro ( analysisHidden $childList)
+	<input id="$!{childList.getAttributeValue('htmlId')}" name="$!{childList.getAttributeValue('name')}" type="hidden" value="$!{childList.getAttributeValue('value')}" />
+#end

@@ -1,0 +1,11 @@
+## layoutÔªËØ´¦Àí
+#macro ( analysisLayout $childList)
+	<div class="$!{childList.getAttributeValue('htmlId')}" data-options="$!{childList.getAttributeValue('htmlId')}">
+		#set($regions=$childList.getChildren("regions")[0])
+		#foreach ( $region in $regions.getChildren("region") )
+			<div data-options="$!{region.getAttributeValue('data-options')}" style="$!{region.getAttributeValue('style')}">
+				#recursiveEmbed($region)
+			</div>
+		#end
+	</div>
+#end

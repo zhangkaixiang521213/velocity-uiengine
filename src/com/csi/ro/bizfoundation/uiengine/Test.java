@@ -5,7 +5,7 @@ public class Test {
 	 public static void main(String[] args) {
 		 
 		 	if(args.length<1){
-		 		System.out.println("请输入文件名或文件目录...");
+		 		System.out.println("s请输入文件名或文件目录...");
 		 		System.exit(0);
 		 	}
 	        

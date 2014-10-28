@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Uiengine
+Bundle-SymbolicName: com.csi.ro.bizfoundation.uiengine
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.csi.ro.bizfoundation.uiengine.UIEnginePlugin
+Bundle-Vendor: CSI
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: lib/commons-collections-3.2.1.jar,
+ lib/commons-lang-2.4.jar,
+ lib/jdom-1.0.jar,
+ lib/velocity-1.7.jar
+Export-Package: com.csi.ro.bizfoundation.uiengine

@@ -1,0 +1,134 @@
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper namespace="">
+
+	 					
+	                  	         		         			         		         			         		         			         		         			         		         			         		         			         		         			         		         			         		         			         		         			         		         			         		         			         		         			         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         								<!--coupon_record query field-->
+	<sql id="columns">
+																																								
+													id,
+																																																																																																																																						
+													coupon_batch_id,
+																																																																																																																													
+													digit_code,
+																																																																																																																				
+													encryption,
+																																																																																																																				
+													status,
+																																																																																																																																						
+													note,
+																																																																																																																				
+													create_time
+																																																																								</sql>
+	
+	<!--coupon_record result map-->
+  <resultMap type="CouponRecord" id="CouponRecordMap">
+  																																																																																																																										
+																																	<id column="id" property="id"/>
+																																																																																																																																																																																																							
+																																	<result column="coupon_batch_id" property="couponBatchId"/>
+																																																																																																																																																																																					
+																																	<result column="digit_code" property="digitCode"/>
+																																																																																																																																																																												
+																																	<result column="encryption" property="encryption"/>
+																																																																																																																																																																																														
+																																	<result column="status" property="status"/>
+																																																																																																																																																																																														
+																																	<result column="note" property="note"/>
+																																																																																																																																																																			
+																																	<result column="create_time" property="createTime"/>
+																																																																	  </resultMap>
+  
+  <!--save coupon_record -->
+  <insert id="save" parameterType="CouponRecord" >
+		insert into coupon_record (
+		<include refid="columns"/>)
+		values (
+																																														
+															#{id},
+																																																																																																																																																																
+															#{couponBatchId},
+																																																																																																																																																					
+															#{digitCode},
+																																																																																																																																										
+															#{encryption},
+																																																																																																																																										
+															#{status},
+																																																																																																																																																																
+															#{note},
+																																																																																																																																										
+															#{createTime}
+																																																																																									)
+	</insert>
+	
+		<!--update coupon_record -->
+	<update id="update" parameterType="CouponRecord">
+	    UPDATE coupon_record 
+	    <set>
+	      																																																																																																																																																			
+																																																																																																																																																																																																																																																																																				
+																																								<if test="coupon_batch_id != null">coupon_batch_id = #{couponBatchId}, </if>
+																																																																																																																																																																																																																													
+																																								<if test="digit_code != null">digit_code = #{digitCode}, </if>
+																																																																																																																																																																																																																		
+																																								<if test="encryption != null">encryption = #{encryption}, </if>
+																																																																																																																																																																																																																																								
+																																								<if test="status != null">status = #{status}, </if>
+																																																																																																																																																																																																																																								
+																																								<if test="note != null">note = #{note}, </if>
+																																																																																																																																																																																																							
+																																								<if test="create_time != null">create_time = #{createTime}, </if>
+																																																																																	    </set>
+	    WHERE id = #{id}
+  </update>
+  
+  <!-- query coupon_record by primary key -->
+  <select id="findById"  resultMap="CouponRecordMap">
+		SELECT <include refid="columns"/>  FROM coupon_record where id=#{id}
+	</select>
+         						         					         						         						
+         						         					         						         						
+         						         					         				         			         		         			         		         			         		         			         		         	             
+
+</mapper> 

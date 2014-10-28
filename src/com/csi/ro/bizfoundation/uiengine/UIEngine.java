@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import org.apache.velocity.Template;
@@ -13,16 +14,22 @@ import org.apache.velocity.app.Velocity;
 import org.jdom.Document;
 import org.jdom.input.SAXBuilder;
 
+import com.csi.ro.bizfoundation.service.FieldBean;
+import com.csi.ro.bizfoundation.service.TableFieldService;
+
 public class UIEngine {
 
 	/**
 	 * xml ui转换方法
 	 * @param fileOrFolder 文件或文件夹
 	 */
-	public void uiEngine(String fileOrFolder,String destFolder){
+	public void uiEngine(String fileOrFolder,String destFolder,String templePath,String surfix){
 		File file = new File(fileOrFolder);
 		File destFile = new File(destFolder);
 		File[] files = file.listFiles(); 
+		analysisEngine(file,destFile,templePath,surfix);
+		
+		/*
 		if(file.isFile() && isXMLFile(file)){
 			analysisEngine(file,destFile);
 		}else if(files==null){
@@ -36,6 +43,7 @@ public class UIEngine {
 	            } 
 	        } 
 		}
+		*/
 		
 	}
 	
@@ -58,7 +66,7 @@ public class UIEngine {
 	 * velocity转换方法
 	 * @param file
 	 */
-	private void analysisEngine(File file,File destFile){
+	private void analysisEngine(File file,File destFile,String templePath,String surfix){
 		FileOutputStream fos = null; 
     	BufferedWriter  writer = null;
 
@@ -82,6 +90,10 @@ public class UIEngine {
             Properties p = new Properties();
             p.put("velocimacro.max.depth","40");
             p.put("file.resource.loader.class","org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+            
+            p.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
+            p.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
+            p.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");   
             //p.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH, "d://");
             Velocity.init(p);
             //System.out.println("resource.loader:"+Velocity.getProperty("resource.loader"));
@@ -133,6 +145,8 @@ public class UIEngine {
 
             VelocityContext context = new VelocityContext();
             context.put("root", root);
+            context.put("tableService", new TableFieldService());
+//            context.put("list", new ArrayList<FieldBean>());
 
             /*
              *  make a writer, and merge the template 'against' the context
@@ -143,11 +157,14 @@ public class UIEngine {
             //Template template = Velocity.getTemplate("com/chinasofti/studio/engine/templatefile/engine.vm");
             
             //Template template = velocityEngine.getTemplate("com/chinasofti/studio/engine/templatefile/engine.vm");
-            Template template = Velocity.getTemplate("uienginetemplate/engine.vm");
+//            Template template = Velocity.getTemplate("daoenginetemplate/engine.vm");
+//            Template template = Velocity.getTemplate("daoenginetemplate/engine_bean.vm");
+            Template template = Velocity.getTemplate(templePath);
             
-            String fileName=file.getName().subSequence(0, file.getName().lastIndexOf("."))+"."+Contents.DESTINATION_FILESURFIX;
-            System.out.println(destFile.getParent()+File.separator+"uienginetemplate"+File.separator+fileName);
-            File outFile = new File(destFile.getParent()+File.separator+"uienginetemplate"+File.separator+fileName); 
+//            String fileName=file.getName().subSequence(0, file.getName().lastIndexOf("."))+"."+Contents.DESTINATION_FILESURFIX_JAVA;
+            String fileName=file.getName().subSequence(0, file.getName().lastIndexOf("."))+"."+surfix;
+            System.out.println(destFile.getParent()+File.separator+fileName);
+            File outFile = new File(destFile.getParent()+File.separator+fileName); 
             //File outFile = new File(file.getParent()+File.separator+fileName); 
             
             fos = new FileOutputStream(outFile);  

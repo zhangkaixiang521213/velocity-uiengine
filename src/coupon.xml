@@ -44,78 +44,206 @@
          						         					         						         						
          						         					         						         						
          						         					         						         						
-         						         								<!--coupon_record query field-->
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         								<!--recharge_batch query field-->
 	<sql id="columns">
 																																								
 													id,
 																																																																																																																																						
-													coupon_batch_id,
-																																																																																																																													
-													digit_code,
+													batch_number,
 																																																																																																																				
-													encryption,
+													batch_name,
 																																																																																																																				
-													status,
-																																																																																																																																						
+													applicant,
+																																																																																																																				
+													conntact_mobile,
+																																																																																																																				
+													connact_email,
+																																																																																																																				
+													application_date,
+																																																																																																											
+													checker,
+																																																																																																																				
+													check_time,
+																																																																																																											
+													activator,
+																																																																																																																				
+													activation_time,
+																																																																																																											
+													verification,
+																																																																																																																				
+													verification_time,
+																																																																																																											
+													batch_status,
+																																																																																																																				
+													purpose,
+																																																																																																																				
 													note,
 																																																																																																																				
 													create_time
 																																																																								</sql>
 	
-	<!--coupon_record result map-->
-  <resultMap type="CouponRecord" id="CouponRecordMap">
+	<!--recharge_batch result map-->
+  <resultMap type="RechargeBatch" id="RechargeBatchMap">
   																																																																																																																										
 																																	<id column="id" property="id"/>
-																																																																																																																																																																																																							
-																																	<result column="coupon_batch_id" property="couponBatchId"/>
-																																																																																																																																																																																					
-																																	<result column="digit_code" property="digitCode"/>
+																																																																																																																																																																																														
+																																	<result column="batch_number" property="batchNumber"/>
 																																																																																																																																																																												
-																																	<result column="encryption" property="encryption"/>
-																																																																																																																																																																																														
-																																	<result column="status" property="status"/>
-																																																																																																																																																																																														
+																																	<result column="batch_name" property="batchName"/>
+																																																																																																																																																																												
+																																	<result column="applicant" property="applicant"/>
+																																																																																																																																																																												
+																																	<result column="conntact_mobile" property="conntactMobile"/>
+																																																																																																																																																																												
+																																	<result column="connact_email" property="connactEmail"/>
+																																																																																																																																																																			
+																																	<result column="application_date" property="applicationDate"/>
+																																																																																																																																																																			
+																																	<result column="checker" property="checker"/>
+																																																																																																																																																																			
+																																	<result column="check_time" property="checkTime"/>
+																																																																																																																																																																			
+																																	<result column="activator" property="activator"/>
+																																																																																																																																																																			
+																																	<result column="activation_time" property="activationTime"/>
+																																																																																																																																																																			
+																																	<result column="verification" property="verification"/>
+																																																																																																																																																																			
+																																	<result column="verification_time" property="verificationTime"/>
+																																																																																																																																																																			
+																																	<result column="batch_status" property="batchStatus"/>
+																																																																																																																																																																												
+																																	<result column="purpose" property="purpose"/>
+																																																																																																																																																																												
 																																	<result column="note" property="note"/>
 																																																																																																																																																																			
 																																	<result column="create_time" property="createTime"/>
 																																																																	  </resultMap>
   
-  <!--save coupon_record -->
-  <insert id="save" parameterType="CouponRecord" >
-		insert into coupon_record (
+  <!--save recharge_batch -->
+  <insert id="save" parameterType="RechargeBatch" >
+		insert into recharge_batch (
 		<include refid="columns"/>)
 		values (
 																																														
 															#{id},
 																																																																																																																																																																
-															#{couponBatchId},
-																																																																																																																																																					
-															#{digitCode},
+															#{batchNumber},
 																																																																																																																																										
-															#{encryption},
+															#{batchName},
 																																																																																																																																										
-															#{status},
-																																																																																																																																																																
+															#{applicant},
+																																																																																																																																										
+															#{conntactMobile},
+																																																																																																																																										
+															#{connactEmail},
+																																																																																																																																										
+															#{applicationDate},
+																																																																																																																															
+															#{checker},
+																																																																																																																																										
+															#{checkTime},
+																																																																																																																															
+															#{activator},
+																																																																																																																																										
+															#{activationTime},
+																																																																																																																															
+															#{verification},
+																																																																																																																																										
+															#{verificationTime},
+																																																																																																																															
+															#{batchStatus},
+																																																																																																																																										
+															#{purpose},
+																																																																																																																																										
 															#{note},
 																																																																																																																																										
 															#{createTime}
 																																																																																									)
 	</insert>
 	
-		<!--update coupon_record -->
-	<update id="update" parameterType="CouponRecord">
-	    UPDATE coupon_record 
+		<!--update recharge_batch -->
+	<update id="update" parameterType="RechargeBatch">
+	    UPDATE recharge_batch 
 	    <set>
 	      																																																																																																																																																			
-																																																																																																																																																																																																																																																																																				
-																																								<if test="coupon_batch_id != null">coupon_batch_id = #{couponBatchId}, </if>
-																																																																																																																																																																																																																													
-																																								<if test="digit_code != null">digit_code = #{digitCode}, </if>
+																																																																																																																																																																																																																																																																									
+																																								<if test="batch_number != null">batch_number = #{batchNumber}, </if>
 																																																																																																																																																																																																																		
-																																								<if test="encryption != null">encryption = #{encryption}, </if>
-																																																																																																																																																																																																																																								
-																																								<if test="status != null">status = #{status}, </if>
-																																																																																																																																																																																																																																								
+																																								<if test="batch_name != null">batch_name = #{batchName}, </if>
+																																																																																																																																																																																																																		
+																																								<if test="applicant != null">applicant = #{applicant}, </if>
+																																																																																																																																																																																																																		
+																																								<if test="conntact_mobile != null">conntact_mobile = #{conntactMobile}, </if>
+																																																																																																																																																																																																																		
+																																								<if test="connact_email != null">connact_email = #{connactEmail}, </if>
+																																																																																																																																																																																																							
+																																								<if test="application_date != null">application_date = #{applicationDate}, </if>
+																																																																																																																																																																																																							
+																																								<if test="checker != null">checker = #{checker}, </if>
+																																																																																																																																																																																																							
+																																								<if test="check_time != null">check_time = #{checkTime}, </if>
+																																																																																																																																																																																																							
+																																								<if test="activator != null">activator = #{activator}, </if>
+																																																																																																																																																																																																							
+																																								<if test="activation_time != null">activation_time = #{activationTime}, </if>
+																																																																																																																																																																																																							
+																																								<if test="verification != null">verification = #{verification}, </if>
+																																																																																																																																																																																																							
+																																								<if test="verification_time != null">verification_time = #{verificationTime}, </if>
+																																																																																																																																																																																																							
+																																								<if test="batch_status != null">batch_status = #{batchStatus}, </if>
+																																																																																																																																																																																																																		
+																																								<if test="purpose != null">purpose = #{purpose}, </if>
+																																																																																																																																																																																																																		
 																																								<if test="note != null">note = #{note}, </if>
 																																																																																																																																																																																																							
 																																								<if test="create_time != null">create_time = #{createTime}, </if>
@@ -123,10 +251,70 @@
 	    WHERE id = #{id}
   </update>
   
-  <!-- query coupon_record by primary key -->
-  <select id="findById"  resultMap="CouponRecordMap">
-		SELECT <include refid="columns"/>  FROM coupon_record where id=#{id}
+  <!-- query recharge_batch by primary key -->
+  <select id="findById"  resultMap="RechargeBatchMap">
+		SELECT <include refid="columns"/>  FROM recharge_batch where id=#{id}
 	</select>
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         				         					         						         						
+         						         					         						         						
+         						         					         						         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
+         						         					         						         						
          						         					         						         						
          						         					         						         						
          						         					         				         			         		         			         		         			         		         			         		         	             

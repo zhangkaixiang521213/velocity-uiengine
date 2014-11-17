@@ -23,11 +23,11 @@ public class UIEngine {
 	 * xml ui转换方法
 	 * @param fileOrFolder 文件或文件夹
 	 */
-	public void uiEngine(String fileOrFolder,String destFolder,String templePath,String surfix){
+	public void uiEngine(String fileOrFolder,String destFolder,String templePath,String fileName){
 		File file = new File(fileOrFolder);
 		File destFile = new File(destFolder);
 		File[] files = file.listFiles(); 
-		analysisEngine(file,destFile,templePath,surfix);
+		analysisEngine(file,destFile,templePath,fileName);
 		
 		/*
 		if(file.isFile() && isXMLFile(file)){
@@ -66,7 +66,7 @@ public class UIEngine {
 	 * velocity转换方法
 	 * @param file
 	 */
-	private void analysisEngine(File file,File destFile,String templePath,String surfix){
+	private void analysisEngine(File file,File destFile,String templePath,String fileName){
 		FileOutputStream fos = null; 
     	BufferedWriter  writer = null;
 
@@ -159,12 +159,16 @@ public class UIEngine {
             //Template template = velocityEngine.getTemplate("com/chinasofti/studio/engine/templatefile/engine.vm");
 //            Template template = Velocity.getTemplate("daoenginetemplate/engine.vm");
 //            Template template = Velocity.getTemplate("daoenginetemplate/engine_bean.vm");
+            
+            System.out.println(templePath);
             Template template = Velocity.getTemplate(templePath);
             
 //            String fileName=file.getName().subSequence(0, file.getName().lastIndexOf("."))+"."+Contents.DESTINATION_FILESURFIX_JAVA;
-            String fileName=file.getName().subSequence(0, file.getName().lastIndexOf("."))+"."+surfix;
-            System.out.println(destFile.getParent()+File.separator+fileName);
-            File outFile = new File(destFile.getParent()+File.separator+fileName); 
+//            String fileName=file.getName().subSequence(0, file.getName().lastIndexOf("."))+"."+surfix;
+            System.out.println(destFile.getPath()+File.separator+fileName);
+            File outFile = new File(destFile.getPath()+File.separator+fileName); 
+//            System.out.println(destFile.getParent()+File.separator+fileName);
+//            File outFile = new File(destFile.getParent()+File.separator+fileName); 
             //File outFile = new File(file.getParent()+File.separator+fileName); 
             
             fos = new FileOutputStream(outFile);  

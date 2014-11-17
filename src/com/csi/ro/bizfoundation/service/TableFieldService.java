@@ -14,15 +14,17 @@ public class TableFieldService {
 		map.put("datetime", "import java.util.Date;import com.fasterxml.jackson.annotation.JsonFormat;");
 		map.put("date", "import java.util.Date;");
 		
-		maptype.put("varbinary", "String");
+		maptype.put("varchar", "String");
 		maptype.put("datetime", "Date");
 		maptype.put("date", "Date");
 		maptype.put("float", "float");
 		maptype.put("tinyint", "int");
 		maptype.put("int", "int");
+		maptype.put("time", "Date");
 		
 		mapjson.put("datetime", "@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\", timezone = \"GMT+08:00\")");
 		mapjson.put("date", "@JsonFormat(pattern = \"yyyy-MM-dd\", timezone = \"GMT+08:00\")");
+		mapjson.put("time", "@JsonFormat(pattern = \"HH:mm:ss\", timezone = \"GMT+08:00\")");
 	}
 	
 	

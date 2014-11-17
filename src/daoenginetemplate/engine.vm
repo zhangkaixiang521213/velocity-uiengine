@@ -3,9 +3,11 @@
 #set($TABLE_NAME="Code")
 #set($TABLE_FIELD_COLUMN="Code")
 #set($TABLE_COLUMNS="Columns")
+#set($FIELD_DATA_TYPE="DataType")
 
 ##±í
-#set($CREATE_TABLE="coupon_record")
+#set($CREATE_TABLE="red_pay")
+#set($DAO_PATH="com.ariadnethread.redactivity.rulemanager.dao.mybatis.RedPayMapper")
 
 ##°üÀ¨º¯Êý
 #set($path="daoenginetemplate/")
@@ -39,7 +41,7 @@
 #end
 
 #macro ( table $tableNode,$tableName)
-	<!--$tableName query field-->
+	<!-- $tableName query field-->
 	<sql id="columns">
 		#set($columnSize=$tableNode.getChildren().size())
 		#set($forColumns=0)
@@ -59,7 +61,7 @@
 		#end
 	</sql>
 	
-	<!--$tableName result map-->
+	<!-- $tableName result map-->
   <resultMap type="$tableService.tableName($tableName)" id="$tableService.tableName($tableName)Map">
   	#foreach ( $Columns in $tableNode.getChildren() )
 				#set($id="false")
@@ -80,7 +82,7 @@
 		#end
   </resultMap>
   
-  <!--save $tableName -->
+  <!-- save $tableName -->
   <insert id="save" parameterType="$tableService.tableName($tableName)" >
 		insert into $tableName (
 		<include refid="columns"/>)
@@ -104,7 +106,8 @@
 	</insert>
 	
 	#set($idField="")
-	<!--update $tableName -->
+	#set($idFieldType="")
+	<!-- update $tableName -->
 	<update id="update" parameterType="$tableService.tableName($tableName)">
 	    UPDATE $tableName 
 	    <set>
@@ -117,10 +120,13 @@
 					#end
 				
 					#foreach ( $Columnss in $Columns.getChildren() )
+						#if($Columnss.getName() == $FIELD_DATA_TYPE  && $id == "true")
+							#set($idFieldType=$tableService.fieldTypeToJavaType($Columnss.getText()))
+						#end
 						#if($Columnss.getName() == $TABLE_FIELD_COLUMN && $id == "true" )
 							#set($idField=$Columnss.getText())	
 						#elseif($Columnss.getName() == $TABLE_FIELD_COLUMN)
-							<if test="$Columnss.getText() != null">$Columnss.getText() = #{$tableService.tableField($Columnss.getText())}, </if>
+							<if test="$tableService.tableField($Columnss.getText()) != null">$Columnss.getText() = #{$tableService.tableField($Columnss.getText())}, </if>
 						#end
 					#end
 			#end
@@ -129,16 +135,21 @@
   </update>
   
   <!-- query $tableName by primary key -->
-  <select id="findBy$tableService.tableName($idField)"  resultMap="$tableService.tableName($tableName)Map">
+  <select id="findBy$tableService.tableName($idField)"  resultMap="$tableService.tableName($tableName)Map" parameterType="$idFieldType">
 		SELECT <include refid="columns"/>  FROM $tableName where $idField=#{$tableService.tableField($idField)}
 	</select>
+	
+	<!-- delete $tableName by primary key -->
+  <delete id="deleteBy$tableService.tableName($idField)"  parameterType="$idFieldType">
+		delete FROM $tableName where $idField=#{$tableService.tableField($idField)}
+  </delete>
 #end
 
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace must point Dao interface -->
-<mapper namespace="">
+<mapper namespace="$DAO_PATH">
 
 #recursiveBody($root.getRootElement())
 

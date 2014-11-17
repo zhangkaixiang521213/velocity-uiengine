@@ -6,7 +6,8 @@
 #set($FIELD_DATA_TYPE="DataType")
 
 ##表
-#set($CREATE_TABLE="coupon_record")
+#set($CREATE_TABLE="red_pay")
+#set($DAO_PACKAGE_PATH="com.ariadnethread.redactivity.rulemanager.domain")
 
 ##包括函数
 #set($path="daoenginetemplate/")
@@ -41,7 +42,7 @@
 #end
 
 #macro ( table $tableNode,$tableName)
-	package com.ariadnethread;
+	package $DAO_PACKAGE_PATH;
 	##导入包
 	#importApi($tableNode)
 	

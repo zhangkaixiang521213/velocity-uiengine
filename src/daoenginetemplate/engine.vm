@@ -6,8 +6,8 @@
 #set($FIELD_DATA_TYPE="DataType")
 
 ##±í
-#set($CREATE_TABLE="red_pay")
-#set($DAO_PATH="com.ariadnethread.redactivity.rulemanager.dao.mybatis.RedPayMapper")
+#set($CREATE_TABLE=$tableService.tableNames())
+#set($DAO_PATH="${tableService.packagePath()}.dao.mybatis.$tableService.tableNamess()Mapper")
 
 ##°üÀ¨º¯Êý
 #set($path="daoenginetemplate/")

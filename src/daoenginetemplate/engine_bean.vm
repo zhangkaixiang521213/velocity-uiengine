@@ -6,8 +6,8 @@
 #set($FIELD_DATA_TYPE="DataType")
 
 ##表
-#set($CREATE_TABLE="red_pay")
-#set($DAO_PACKAGE_PATH="com.ariadnethread.redactivity.rulemanager.domain")
+#set($CREATE_TABLE="membership_record_01")
+#set($DAO_PACKAGE_PATH="com.ariadnethread.couponcard.membership.domain")
 
 ##包括函数
 #set($path="daoenginetemplate/")
@@ -48,7 +48,7 @@
 	
 	
 @MyBatisDomain
-public class $tableService.tableName($tableName) extends DomainBase{
+public class $tableService.tableName($tableName) extends DomainBase implements Serializable{
 	##类构造函数
 	#javaStruct($tableName)
 	
@@ -73,6 +73,7 @@ public $tableService.tableName($tableName)() {
 #end
 
 #macro ( importApi $tableNode)
+	import java.io.Serializable;
 	import org.apache.commons.lang.builder.ToStringBuilder;
 	import core.domain.DomainBase;
 	import core.mybatis.MyBatisDomain;

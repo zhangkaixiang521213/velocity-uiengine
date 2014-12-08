@@ -17,9 +17,10 @@ public class TableFieldService {
 		maptype.put("varchar", "String");
 		maptype.put("datetime", "Date");
 		maptype.put("date", "Date");
-		maptype.put("float", "float");
-		maptype.put("tinyint", "int");
-		maptype.put("int", "int");
+		maptype.put("float", "Float");
+		maptype.put("tinyint", "Integer");
+		maptype.put("int", "Long");
+		maptype.put("bigint", "Long");
 		maptype.put("time", "Date");
 		
 		mapjson.put("datetime", "@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\", timezone = \"GMT+08:00\")");

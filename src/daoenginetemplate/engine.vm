@@ -8,7 +8,6 @@
 ##±í
 #set($CREATE_TABLE=$tableService.tableNames())
 #set($DAO_PATH="${tableService.packagePath()}.dao.mybatis.$tableService.tableNamess()Mapper")
-
 ##°üÀ¨º¯Êý
 #set($path="daoenginetemplate/")
 

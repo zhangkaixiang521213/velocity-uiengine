@@ -5,18 +5,18 @@ import com.csi.ro.bizfoundation.service.TableFieldService;
 public class CreateDaoBean {
 	
 	public static String currentTableName(){
-		return "actfix_activity";
+		return "exchange_rule_price";
 	}
 	public static String packagePath(){
-		return "com.ariadnethread.activity.actfix";
+		return "com.ariadnethread.couponcard.exchange";
 	}
 
 	 public static void main(String[] args) {
 		 
-		 String xmlPath="D:\\workSpace\\movie-service\\movie-activity\\src\\main\\java\\com\\ariadnethread\\activity\\actfix\\dao\\mybatis";
-		 String beanPath="D:\\workSpace\\movie-service\\movie-activity\\src\\main\\java\\com\\ariadnethread\\activity\\actfix\\domain";
-//		 String xmlPath="D:\\workSpace\\movie-service\\movie-couponcard\\src\\main\\java\\com\\ariadnethread\\couponcard\\coupon\\dao\\mybatis";
-//		 String beanPath="D:\\workSpace\\movie-service\\movie-couponcard\\src\\main\\java\\com\\ariadnethread\\couponcard\\coupon\\domain";
+//		 String xmlPath="D:\\workSpace\\movie-service\\movie-activity\\src\\main\\java\\com\\ariadnethread\\activity\\actfix\\dao\\mybatis";
+//		 String beanPath="D:\\workSpace\\movie-service\\movie-activity\\src\\main\\java\\com\\ariadnethread\\activity\\actfix\\domain";
+		 String xmlPath="D:\\workSpace\\movie-service\\movie-couponcard\\src\\main\\java\\com\\ariadnethread\\couponcard\\exchange\\dao\\mybatis";
+		 String beanPath="D:\\workSpace\\movie-service\\movie-couponcard\\src\\main\\java\\com\\ariadnethread\\couponcard\\exchange\\domain";
 //		 String xmlPath="D:\\workSpace\\movie-service\\movie-couponcard\\src\\main\\java\\com\\ariadnethread\\couponcard\\membership\\dao\\mybatis";
 //		 String beanPath="D:\\workSpace\\movie-service\\movie-couponcard\\src\\main\\java\\com\\ariadnethread\\couponcard\\membership\\domain";
 //		 String xmlPath="D:\\workSpace\\movie-service\\movie-devicemanage\\src\\main\\java\\com\\ariadnethread\\nocmanage\\dao\\mybatis";
@@ -27,9 +27,9 @@ public class CreateDaoBean {
 //		 String tableObj="recharge_record_01";
 		 String tableObj=new TableFieldService().tableName(currentTableName());
 		 
-//		 createBean(beanPath,tableObj);   
+		 createBean(beanPath,tableObj);   
 //		 createDao(xmlPath,tableObj);
-		 createDaoXML(xmlPath,tableObj);
+//		 createDaoXML(xmlPath,tableObj);
 		 
 	 }
 	 
